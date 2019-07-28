@@ -1,0 +1,124 @@
+
+
+#movie-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: $main-color;
+    overflow: auto;
+    box-sizing: border-box;
+    z-index: 20;
+    #background-img-popup {
+        background-image: url();
+    }
+    .movie-header {
+        height: 250px;
+        position: relative;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        background-color: #081c24;
+        .movie-wrap {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            .movie-poster {
+                background: #081c24;
+                display: block;
+                position: absolute;
+                width: calc(45% - 40px);
+                top: 40px;
+                left: 40px;
+                padding: 0;
+                margin: 0;
+
+            }  
+            .movie-title {
+                width: 55%;
+                text-align: left;
+                margin-left: 45%;
+                padding: 30px 30px 30px 40px;
+                position: relative;
+                color: $secondary-color;
+                h1 {
+                    #movie-title-text {
+                        font-size: 30px;
+                        font-weight: 500;
+                        line-height: 1.4;
+                        text-align: left;
+                    }
+                }
+                h2 {
+                    #movie-tagline-text{
+                        display: block;
+                        font-size: 14px;
+                        font-weight: 300;
+                        color: hsla(0,0%,100%,.7);
+                        margin-top: 10px;
+                    }
+                }
+            } 
+        }
+    }
+    .movie-main {
+        background: #f8f8f8;
+        .movie-wrap-main {
+            flex-direction: row;
+            display: flex;
+            flex-wrap: wrap;
+            .movie-info {
+                order: 2;
+                padding: 40px;
+                width: 55%;
+                margin-left: 45%;
+                .movie-description {
+                    #overview {
+                        margin-bottom: 30px;
+                        font-size: 14px;
+                        font-weight: 300;
+                        line-height: 1.8;
+                    }                
+                }
+                .movie-details {
+                    margin-bottom: 30px;
+                    h3 {
+                        font-size: 16px;
+                        margin: 0;
+                        font-weight: 400;
+                        text-transform: uppercase;
+                        color: $secondary-color;
+
+                        #genres #release-date {
+                            font-weight: 300;
+                            font-size: 14px;
+                            margin-top: 5px;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+.movie-popup-close {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    background: transparent;
+    width: 40px;
+    height: 40px;
+    transition: background .5s ease;
+    cursor: pointer;
+    &:hover {
+        background-color: $secondary-color;
+    }
+}
+
+.hide-popup {
+    display: none;
+}

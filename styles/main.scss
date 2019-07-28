@@ -1,0 +1,16 @@
+
+/*GENERAL*/
+@import 'generals/reseteo';
+@import 'generals/variables';
+
+/*PAGES*/
+@import 'pages/home';
+
+/*COMPONENTS*/
+@import 'components/buttons';
+@import 'components/input';
+
+/*LAYOUT*/
+@import 'layout/header';
+@import 'layout/nav';
+@import 'layout/popUp';
