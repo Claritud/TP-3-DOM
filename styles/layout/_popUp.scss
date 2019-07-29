@@ -6,10 +6,22 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background: $main-color;
+    background: #000000ba;
     overflow: auto;
     box-sizing: border-box;
     z-index: 20;
+
+    .movie-popup-box {
+        width: 100%;
+        max-width: 768px;
+        position: relative;
+        z-index: 5;
+        background: #081c24;
+        padding-bottom: 0;
+        margin: 40px auto;
+
+    }
+    
     #background-img-popup {
         background-image: url();
     }
@@ -24,6 +36,7 @@
             display: flex;
             align-items: center;
             height: 100%;
+            background: rgba(8,28,36,.85);
             .movie-poster {
                 background: #081c24;
                 display: block;
@@ -33,35 +46,40 @@
                 left: 40px;
                 padding: 0;
                 margin: 0;
-
+                img {
+                    width: 100%;
+                    max-width: 100%;
+                    height: auto;
+                }
             }  
+
             .movie-title {
                 width: 55%;
                 text-align: left;
                 margin-left: 45%;
                 padding: 30px 30px 30px 40px;
                 position: relative;
-                color: $secondary-color;
+               
                 h1 {
-                    #movie-title-text {
-                        font-size: 30px;
-                        font-weight: 500;
-                        line-height: 1.4;
-                        text-align: left;
-                    }
+                    font-size: 30px;
+                    font-weight: 500;
+                    line-height: 1.4;
+                    text-align: left;
+                    color: $secondary-color;       
                 }
-                h2 {
-                    #movie-tagline-text{
-                        display: block;
-                        font-size: 14px;
-                        font-weight: 300;
-                        color: hsla(0,0%,100%,.7);
-                        margin-top: 10px;
-                    }
+            
+                p {
+                    display: block;
+                    font-size: 14px;
+                    font-weight: 300;
+                    color: #ffffffb3;
+                    margin-top: 10px;
+                    line-height: 1.4;          
                 }
             } 
         }
     }
+
     .movie-main {
         background: #f8f8f8;
         .movie-wrap-main {
@@ -83,27 +101,41 @@
                 }
                 .movie-details {
                     margin-bottom: 30px;
+
                     h3 {
                         font-size: 16px;
                         margin: 0;
                         font-weight: 400;
-                        text-transform: uppercase;
                         color: $secondary-color;
+                    }
 
-                        #genres #release-date {
-                            font-weight: 300;
-                            font-size: 14px;
-                            margin-top: 5px;
-                        }
+                    #genres {
+                        margin-bottom: 30px;
+                        font-size: 14px;
+                        font-weight: 300;
+                        line-height: 1.8;
+                        font-size: 14px;
+                        margin-top: 5px;
+                    }
+                    #release-date {
+                        margin-bottom: 30px;
+                        font-size: 14px;
+                        font-weight: 300;
+                        line-height: 1.8;
+                        font-size: 14px;
+                        margin-top: 5px;
                     }
                 }
             }
         }
 
     }
+
+ 
+
 }
 
-.movie-popup-close {
+#movie-popup-close {
     display: block;
     position: absolute;
     top: 0;
@@ -122,3 +154,9 @@
 .hide-popup {
     display: none;
 }
+
+
+
+
+
+

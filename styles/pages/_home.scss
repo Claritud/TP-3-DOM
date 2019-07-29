@@ -59,17 +59,14 @@ a {
                     letter-spacing: .5px;
                     color: #081c24;
                     margin: 0;
-                }
-                
+                }              
             }
-
-
         }
-
     }
 
     .movies {
         padding: 15px;
+        box-sizing: border-box;
         .movies-title {
             padding: 23px 15px;
             display: flex;
@@ -94,21 +91,28 @@ a {
                 color: rgba(8,28,36,.5);
             }
         }
-        
+
         .movies-list {
             padding: 0;
             margin: 0;
             list-style: none;
             display: flex;
-            // flex-wrap: wrap;
+            flex-wrap: wrap;
+            box-sizing: border-box;
             .movies-item {
+                box-sizing: border-box;
+                flex-basis: 250px;
+                flex-grow: 1;
                 padding: 15px;
                 width: 50%;
                 color: rgba(8,28,36,.5);
+                transition: transform .5s ease;
+                &:hover {
+                    transform: scale(1.04);
+                }
                     
                 .movies-item-link {
                     color: rgba(8,28,36,.5);
-                    font-weight: 300;
                 }
                 .movies-item-poster {
                     transition: transform .5s ease,box-shadow .5s ease;
@@ -125,9 +129,11 @@ a {
                         border-style: none;
                     }
                 }
+
                 .movies-item-content {
                     padding-top: 15px;
                     .movie-item-title {
+                        font-weight: normal;
                         margin: 0;
                         font-size: 14px;
                         letter-spacing: .5px;
@@ -139,16 +145,16 @@ a {
         }
     }
     
-
     #specific-category {
         position: relative;
 
-        .movie-results {
+        #total-of-movies {
             font-size: 12px;
             font-weight: 300;
             letter-spacing: .5px;
             color: rgba(8,28,36,.5); 
         }
+        
         .more-movies {
             padding: 25px 0;
             text-align: center;
@@ -172,8 +178,6 @@ a {
             }
         }
     }
-
-
 }
 
 .hide{

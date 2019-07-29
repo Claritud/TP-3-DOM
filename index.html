@@ -20,7 +20,7 @@
             </a>
             <div class="nav-wrap"></div>
             <ul class="nav-list">
-                <li class="nav-item">
+                <li class="nav-item" id="popular-icon">
                     <a href="#" class="nav-link">
                         <div class="nav-link-img">
                             <div class="nav-link-icon">
@@ -30,7 +30,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="toprated-icon">
                     <a href="#" class="nav-link">
                         <div class="nav-link-img">
                             <div class="nav-link-icon">
@@ -40,7 +40,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="upcoming-icon">
                     <a href="#" class="nav-link">
                         <div class="nav-link-img">
                             <div class="nav-link-icon">
@@ -50,7 +50,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="nowplaying-icon">
                     <a href="#" class="nav-link">
                         <div class="nav-link-img">
                             <div class="nav-link-icon">
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="movie-title">
                                     <h1 id="movie-title-text"></h1>
-                                    <h3 id="movie-tagline-text"></h3>
+                                    <p id="movie-tagline-text"></p>
                                 </div>
                             </div>
                         </header>
@@ -104,7 +104,7 @@
                         </div>
                     </div>
                 </section>
-                <button class="movie-popup-close">X</button>
+                <div id="movie-popup-close">X</div>
             </div>
         </div>
         <!--------------------------  END SELECT MOVIE POPUP ----------------------------->
@@ -124,9 +124,9 @@
                     <div class="movies">
                         <div class="movies-title">
                             <h2 class="title">Popular Movies</h2>
-                            <a href="#" class="movies-link" id="button-view-all">View All &rarr;</a>
+                            <a href="#" class="movies-link" id="button-view-all-popular">View All &rarr;</a>
                         </div>
-                        <ul class="movies-list" id="movies-container">
+                        <ul class="movies-list" id="movies-container-popular">
                             <li class="movies-item">
                                 <a href="#" class="movies-item-link">
                                     <div class="movies-item-poster">
@@ -144,9 +144,9 @@
                     <div class="movies">
                         <div class="movies-title">
                             <h2 class="title">Top Rated</h2>
-                            <a href="#" class="movies-link">View All &rarr;</a>
+                            <a href="#" class="movies-link" id="button-view-all-toprated">View All &rarr;</a>
                         </div>
-                        <ul class="movies-list" id="movies-container">
+                        <ul class="movies-list" id="movies-container-toprated">
                             <li class="movies-item">
                                 <a href="#" class="movies-item-link">
                                     <div class="movies-item-poster">
@@ -164,9 +164,9 @@
                     <div class="movies">
                         <div class="movies-title">
                             <h2 class="title">Upcoming</h2>
-                            <a href="#" class="movies-link">View All &rarr;</a>
+                            <a href="#" class="movies-link" id="button-view-all-upcoming">View All &rarr;</a>
                         </div>
-                        <ul class="movies-list" id="movies-container">
+                        <ul class="movies-list" id="movies-container-upcoming">
                             <li class="movies-item">
                                 <a href="#" class="movies-item-link">
                                     <div class="movies-item-poster">
@@ -184,9 +184,9 @@
                     <div class="movies">
                         <div class="movies-title">
                             <h2 class="title">Now Playing</h2>
-                            <a href="#" class="movies-link">View All &rarr;</a>
+                            <a href="#" class="movies-link" id="button-view-all-nowplaying">View All &rarr;</a>
                         </div>
-                        <ul class="movies-list" id="movies-container">
+                        <ul class="movies-list" id="movies-container-nowplaying">
                             <li class="movies-item">
                                 <a href="#" class="movies-item-link">
                                     <div class="movies-item-poster">
@@ -205,10 +205,10 @@
             <section id="specific-category" class="hide">
                 <div class="movies">
                     <div class="movies-title">
-                        <h2 class="title">Popular Movies</h2>
+                        <h2 class="title" id="title-specific-category">Popular Movies</h2>
                         <span class="movies-results" id="total-of-movies">number</span>
                     </div>
-                    <ul class="movies-list">
+                    <ul class="movies-list" id="movies-container">
                         <li class="movies-item">
                             <a href="#" class="movies-item-link">
                                 <div class="movies-item-poster">
@@ -226,55 +226,6 @@
                 </div>
             </section>
         </main>
-
-
-
-
-        <!-- 
-    <main>
-        <section class="section-container home1">
-            <section class="movies-section">
-                <div id="popular">
-                    <div class="movies-title">
-                        <h2>Popular Movies</h2>
-                        <h4><a href="" class="view-all">View all<i class="fas fa-long-arrow-alt-right"></i></a></h4>
-                    </div>
-                    <div class="movies-body" id="popular-section">
-                        <div id="movie-node">
-                            <img id='movie-poster'
-                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/dzBtMocZuJbjLOXvrl4zGYigDzh.jpg">
-                            <h3 id='movie-title'></h3>
-                        </div>
-                    </div>
-                    <button type="button" class="hidden" class="load-more">Load more</button>
-                </div>
-            </section>
-        </section>
-    </main>  -->
-
-
-        <!-- este es el pinche modal -->
-        <!-- <img src="" alt="" id="background">
-    <div class="gradient"></div>
-    <div class="card">
-        <img src="" alt="" id="poster">
-        <div class="info">
-            <div class="inner-info"> -->
-        <!-- <form action="">
-                    <input type="search" id="search">
-                    <i class="fa fa-search"></i>
-                </form> -->
-        <!-- <h1 id="title"></h1>
-                <h3 id="tagline"></h3>
-                <p id="overview"></p>
-                <h3>GENRES</h3>
-                <p id="genres"></p>
-                <h3>RELEASE DATE</h3>
-                <p id="releaseDate"></p>
-            </div>
-        </div>
-    </div> -->
-
 
     </div>
     <script src="JS/script.js"></script>
