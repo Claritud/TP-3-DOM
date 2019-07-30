@@ -131,12 +131,12 @@
 
     }
 
- 
-
 }
 
 #movie-popup-close {
-    display: block;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     position: absolute;
     top: 0;
     right: 0;

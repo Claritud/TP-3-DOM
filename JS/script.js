@@ -6,6 +6,7 @@ const moviesModel = moviesContainer.children[0];
 
 const homeContainer = document.getElementById('home-container'); 
 const homeButton = document.getElementById('home-button'); 
+
 const specificCategoryPage = document.getElementById('specific-category');
 const buttonViewAllPopular = document.getElementById('button-view-all-popular');
 const buttonViewAllTopRated = document.getElementById('button-view-all-toprated');
@@ -20,7 +21,8 @@ const upcomingMovieContainer = document.getElementById('movies-container-upcomin
 const nowPlayingdMovieContainer = document.getElementById('movies-container-nowplaying');
 
 const buttonLoadMore = document.getElementById('button-load-more');
-const inputSearch = document.getElementById("input-search"); //id de input
+const inputSearch = document.getElementById("input-search"); 
+const movieNotFound = document.getElementById("movie-not-found");
 
 const titleSpecificCategory = document.getElementById('title-specific-category');
 const totalMovies = document.getElementById('total-of-movies'); 
@@ -40,8 +42,18 @@ const releaseDate = document.getElementById('release-date');
 const closePopUp = document.getElementById('movie-popup-close');
 const popUp = document.getElementById('movie-popup');
 
-// ponele que pongo un onclick en el contenedor de todos los items de el nav, entonces los esta recorreindo
-// y al hacer click en uno de ellos pasa por parametro la categoria y ahi redirige, porque sino tengo que poner un onclick por categoria y redirige ahi si pasando por parametro directamente el nombre.
+
+const searchMovieImage = ruta => {
+    if (ruta !== null) {
+       return `https://image.tmdb.org/t/p/w500${ruta}`;
+    } else {
+       return 'img/no-image.png';
+    }
+}
+
+const hideHomePrincipal = () => {  
+    homeContainer.classList.add('hide');    
+}
 
 const ShowPrincipalMovies = (container, category)  => { 
     fetch 
@@ -51,12 +63,12 @@ const ShowPrincipalMovies = (container, category)  => {
         container.innerHTML = '';       
         for(let i = 0; i < 5; i++) { 
            const newMovies = moviesModel.cloneNode(true);
-           newMovies.children[0].children[0].children[0].src = `https://image.tmdb.org/t/p/w500${data.results[i].poster_path}`;
+           newMovies.children[0].children[0].children[0].src = searchMovieImage(data.results[i].poster_path);
            newMovies.children[0].children[1].children[0].innerText = data.results[i].title;
            newMovies.onclick = () => {
-            movieDetail(data.results[i].id);
-            popUp.style.display = 'block';
-        }
+                movieDetail(data.results[i].id);
+                popUp.style.display = 'flex';
+            }
            container.appendChild(newMovies);           
         }
     });   
@@ -71,43 +83,65 @@ const showAllMoviesHome = () => {
 
 showAllMoviesHome();
 
-
 const viewSpecificCategory = (category, categoryName) => { 
     fetch 
     (`https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}&page=${currentPage}`)
     .then(respuesta => respuesta.json() )
     .then (data => {
-        moviesContainer.innerHTML = ''; 
+        // moviesContainer.innerHTML = ''; 
         titleSpecificCategory.innerText = categoryName;
         totalMovies.innerText = `${(data.total_results).toLocaleString()} results`;
+        if (data.total_results < 20) {buttonLoadMore.style.display = "none"};
         for(result of data.results) { 
             const newMovies = moviesModel.cloneNode(true);
-            newMovies.children[0].children[0].children[0].src = `https://image.tmdb.org/t/p/w500${result.poster_path}`;
+            newMovies.children[0].children[0].children[0].src = searchMovieImage(result.poster_path);
             newMovies.children[0].children[1].children[0].innerText = result.title;
             newMovies.onclick = () => {
                 movieDetail(result.id);
-                closePopUp.classList.remove('hide-popup');
+                popUp.style.display = 'flex';
+            }
+            buttonLoadMore.onclick = () => {
+                currentPage++;
+                specificCategoryPage.classList.remove('hide');
+                viewSpecificCategory(category, categoryName);
             }
             moviesContainer.appendChild(newMovies);           
         }
     });   
 }
-//en vez de pasar currentPage poener search.value
+
 const searchByKeyWord = textoBusqueda => { 
     fetch 
     (`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${textoBusqueda}&page=${currentPage}`)
     .then(respuesta => respuesta.json() )
     .then (data => {
-        console.log(data);
-        moviesContainer.innerHTML = ''; 
-        titleSpecificCategory.innerText = 'Search Results'; //aca falta cambiar esto
-        totalMovies.innerText = `${(data.total_results).toLocaleString()} results`;
-        for(result of data.results) { 
-           const newMovies = moviesModel.cloneNode(true);
-           newMovies.children[0].children[0].children[0].src = `https://image.tmdb.org/t/p/w500${result.poster_path}`;
-           newMovies.children[0].children[1].children[0].innerText = result.title;
-           moviesContainer.appendChild(newMovies);           
+        // moviesContainer.innerHTML = ''; 
+        if (data.total_results !== 0) {
+            titleSpecificCategory.innerText = 'Search Results'; 
+            totalMovies.innerText = `${(data.total_results).toLocaleString()} results`;
+            if (data.total_results < 20) {buttonLoadMore.style.display = "none"};
+            for(result of data.results) { 
+               const newMovies = moviesModel.cloneNode(true);
+               newMovies.children[0].children[0].children[0].src = searchMovieImage(result.poster_path);
+               newMovies.children[0].children[1].children[0].innerText = result.title;
+               newMovies.onclick = () => {
+                movieDetail(result.id);
+                popUp.style.display = 'flex';
+                }
+                buttonLoadMore.onclick = () => {
+                    currentPage++;
+                    specificCategoryPage.classList.remove('hide');
+                    searchByKeyWord(textoBusqueda);
+                }
+               moviesContainer.appendChild(newMovies);           
+            }
+
+        } else {
+            hideHomePrincipal();
+            specificCategoryPage.classList.add('hide'); 
+            movieNotFound.style.display = "flex";
         }
+
     });   
 };
 
@@ -115,13 +149,12 @@ const movieDetail = movieId => {
     fetch 
     (`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`)
     .then(respuesta => respuesta.json() )
-    .then (data => {
-        console.log(data);  
+    .then (data => { 
         let date = new Date(data.release_date);
         let options = {year: 'numeric', month: 'long', day: 'numeric' };
-        let imgBack = `https://image.tmdb.org/t/p/w1280${data.backdrop_path}`
+        let imgBack = searchMovieImage(data.backdrop_path);
         background.style.backgroundImage = `url(${imgBack})`;
-        poster.src = `https://image.tmdb.org/t/p/w500${data.poster_path}`;
+        poster.src = searchMovieImage(data.poster_path);
         title.innerText = data.title;
         tagline.innerText = data.tagline;
         overview.innerText = data.overview;
@@ -130,11 +163,8 @@ const movieDetail = movieId => {
     });   
 }
 
-const hideHomePrincipal = () => {  
-    homeContainer.classList.add('hide');    
-}
-
 homeButton.onclick = () => {
+    moviesContainer.innerHTML = '';
     homeContainer.classList.remove('hide'); 
     showAllMoviesHome(); 
     currentPage = 1; 
@@ -142,71 +172,70 @@ homeButton.onclick = () => {
 }
 
 navPopular.onclick = () => { 
+    moviesContainer.innerHTML = '';
     specificCategoryPage.classList.remove('hide');
     hideHomePrincipal();
     viewSpecificCategory('popular', 'Popular');   
 }
 navTopRated.onclick = () => { 
+    moviesContainer.innerHTML = '';
     specificCategoryPage.classList.remove('hide');
     hideHomePrincipal();
     viewSpecificCategory('top_rated', 'Top Rated');  
 }
 navUpcoming.onclick = () => {
+    moviesContainer.innerHTML = '';
     specificCategoryPage.classList.remove('hide');
     hideHomePrincipal();
     viewSpecificCategory('upcoming', 'Upcoming'); 
 }
 navNowPlaying.onclick = () => { 
+    moviesContainer.innerHTML = '';
     specificCategoryPage.classList.remove('hide');
     hideHomePrincipal();
     viewSpecificCategory('now_playing', 'Now Playing'); 
 }
 
 buttonViewAllPopular.onclick = () => { 
+    moviesContainer.innerHTML = '';
     specificCategoryPage.classList.remove('hide');
     hideHomePrincipal();
     viewSpecificCategory('popular', 'Popular');  
 }
-
 buttonViewAllTopRated.onclick = () => { 
+    moviesContainer.innerHTML = '';
     specificCategoryPage.classList.remove('hide');
     hideHomePrincipal();
     viewSpecificCategory('top_rated', 'Top Rated'); 
 }
-
 buttonViewAllUpcoming.onclick = () => { 
+    moviesContainer.innerHTML = '';
     specificCategoryPage.classList.remove('hide');
     hideHomePrincipal();
     viewSpecificCategory('upcoming', 'Upcoming'); 
 }
-
 buttonViewAllNowPlaying.onclick = () => { 
+    moviesContainer.innerHTML = '';
     specificCategoryPage.classList.remove('hide');
     hideHomePrincipal();
     viewSpecificCategory('now_playing', 'Now Playing'); 
 }
 
-buttonLoadMore.onclick = () => {
-    currentPage++;
-}
-
-inputSearch.onkeypress = event => {
-     if (event.keycode === 13) {
-        specificCategoryPage.classList.remove('hide');
-        hideHomePrincipal();
-        searchByKeyWord(inputSearch.value);
-    } 
+inputSearch.onchange = () => {
+    moviesContainer.innerHTML = ''; 
+    movieNotFound.style.display = "none";
+    specificCategoryPage.classList.remove('hide');
+    hideHomePrincipal();
+    searchByKeyWord(inputSearch.value);   
 }
 
 closePopUp.onclick = () => {
-    popUp.style.display = 'none'; 
-   
+    popUp.style.display = 'none';   
 }
 
 
-// Al api nos responde con un objeto que tiene que página le pedimos, la cantidad de resultados total de la búsqueda, la cantidad de páginas que tenemos (clave para saber cuando dejar de mostrar el botón LOAD MORE) y un array en la propiedad results con todas las películas de la página:
-
-
+// ponele que pongo un onclick en el contenedor de todos los items de el nav, entonces los esta recorreindo
+// y al hacer click en uno de ellos pasa por parametro la categoria y ahi redirige, porque sino tengo que poner un onclick por categoria y redirige ahi si pasando por parametro directamente el nombre.
 
 
 

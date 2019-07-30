@@ -511,7 +511,6 @@ a {
   display: none;
 }
 
-/*COMPONENTS*/
 /*LAYOUT*/
 .header {
   width: 100%;
@@ -782,7 +781,9 @@ a {
 }
 
 #movie-popup-close {
-  display: block;
+  justify-content: center;
+  align-items: center;
+  display: flex;
   position: absolute;
   top: 0;
   right: 0;
@@ -799,6 +800,43 @@ a {
 
 .hide-popup {
   display: none;
+}
+
+#movie-not-found {
+  display: none;
+  width: 100%;
+  height: calc(100vh - 75px);
+  background-image: url(../../img/yodaPop.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+#movie-not-found .filter-movie-not-found {
+  background: rgba(247, 247, 247, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#movie-not-found .search-not-found {
+  width: 100%;
+  padding: 0 40px 40px 0;
+  text-align: center;
+}
+#movie-not-found .search-not-found .not-found-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: #081c24;
+  position: relative;
+  margin: 0;
 }
 
 /*# sourceMappingURL=main.css.map */
