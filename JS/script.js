@@ -42,6 +42,7 @@ const releaseDate = document.getElementById('release-date');
 const closePopUp = document.getElementById('movie-popup-close');
 const popUp = document.getElementById('movie-popup');
 
+// ====================================== FUNCIONES =======================================//
 
 const searchMovieImage = ruta => {
     if (ruta !== null) {
@@ -88,21 +89,20 @@ const viewSpecificCategory = (category, categoryName) => {
     (`https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}&page=${currentPage}`)
     .then(respuesta => respuesta.json() )
     .then (data => {
-        // moviesContainer.innerHTML = ''; 
         titleSpecificCategory.innerText = categoryName;
         totalMovies.innerText = `${(data.total_results).toLocaleString()} results`;
-        if (data.total_results < 20) {buttonLoadMore.style.display = "none"};
-        for(result of data.results) { 
+        if (data.total_results.length < 20) {buttonLoadMore.style.display = "none"};
+        for(let i = 0; i < data.results.length; i++) { 
             const newMovies = moviesModel.cloneNode(true);
-            newMovies.children[0].children[0].children[0].src = searchMovieImage(result.poster_path);
-            newMovies.children[0].children[1].children[0].innerText = result.title;
+            newMovies.children[0].children[0].children[0].src = searchMovieImage(data.results[i].poster_path);
+            newMovies.children[0].children[1].children[0].innerText = data.results[i].title;
             newMovies.onclick = () => {
-                movieDetail(result.id);
+                movieDetail(data.results[i].id);
                 popUp.style.display = 'flex';
             }
             buttonLoadMore.onclick = () => {
                 currentPage++;
-                specificCategoryPage.classList.remove('hide');
+                // specificCategoryPage.classList.remove('hide');
                 viewSpecificCategory(category, categoryName);
             }
             moviesContainer.appendChild(newMovies);           
@@ -115,22 +115,20 @@ const searchByKeyWord = textoBusqueda => {
     (`https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${textoBusqueda}&page=${currentPage}`)
     .then(respuesta => respuesta.json() )
     .then (data => {
-        // moviesContainer.innerHTML = ''; 
         if (data.total_results !== 0) {
             titleSpecificCategory.innerText = 'Search Results'; 
             totalMovies.innerText = `${(data.total_results).toLocaleString()} results`;
-            if (data.total_results < 20) {buttonLoadMore.style.display = "none"};
-            for(result of data.results) { 
+            if (data.total_results.length < 20) {buttonLoadMore.style.display = "none"};
+            for(let i = 0; i < data.results.length; i++) { 
                const newMovies = moviesModel.cloneNode(true);
-               newMovies.children[0].children[0].children[0].src = searchMovieImage(result.poster_path);
-               newMovies.children[0].children[1].children[0].innerText = result.title;
+               newMovies.children[0].children[0].children[0].src = searchMovieImage(data.results[i].poster_path);
+               newMovies.children[0].children[1].children[0].innerText = data.results[i].title;
                newMovies.onclick = () => {
-                movieDetail(result.id);
+                movieDetail(data.results[i].id);
                 popUp.style.display = 'flex';
-                }
-                buttonLoadMore.onclick = () => {
+                }              
+                buttonLoadMore.onclick = () => {     
                     currentPage++;
-                    specificCategoryPage.classList.remove('hide');
                     searchByKeyWord(textoBusqueda);
                 }
                moviesContainer.appendChild(newMovies);           
@@ -141,6 +139,7 @@ const searchByKeyWord = textoBusqueda => {
             specificCategoryPage.classList.add('hide'); 
             movieNotFound.style.display = "flex";
         }
+        if (data.total_results.length < 20) {buttonLoadMore.style.display = "none"};
 
     });   
 };
@@ -233,9 +232,6 @@ closePopUp.onclick = () => {
     popUp.style.display = 'none';   
 }
 
-
-// ponele que pongo un onclick en el contenedor de todos los items de el nav, entonces los esta recorreindo
-// y al hacer click en uno de ellos pasa por parametro la categoria y ahi redirige, porque sino tengo que poner un onclick por categoria y redirige ahi si pasando por parametro directamente el nombre.
 
 
 
